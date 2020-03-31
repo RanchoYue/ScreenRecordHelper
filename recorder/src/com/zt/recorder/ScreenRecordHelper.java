@@ -60,6 +60,7 @@ public class ScreenRecordHelper {
                 }).request();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RECORD_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
@@ -71,6 +72,7 @@ public class ScreenRecordHelper {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initRecorder() {
         final int width = ScreenUtils.getScreenWidth();
         final int height = ScreenUtils.getScreenHeight();
@@ -95,6 +97,7 @@ public class ScreenRecordHelper {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void stopRecord() {
         if (isRecording) {
             isRecording = false;
