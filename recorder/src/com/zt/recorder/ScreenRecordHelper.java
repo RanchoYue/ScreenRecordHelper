@@ -31,10 +31,6 @@ public class ScreenRecordHelper {
     private MediaProjectionManager projectionManager;
     private MediaProjection mediaProjection;
     private VirtualDisplay virtualDisplay;
-
-    private int width = ScreenUtils.getScreenWidth();
-    private int height = ScreenUtils.getScreenHeight();
-    private int dpi = ScreenUtils.getScreenDensityDpi();
     private MediaRecorder mediaRecorder;
     private boolean isRecording;
 
@@ -76,6 +72,9 @@ public class ScreenRecordHelper {
     }
 
     private void initRecorder() {
+        final int width = ScreenUtils.getScreenWidth();
+        final int height = ScreenUtils.getScreenHeight();
+        final int dpi = ScreenUtils.getScreenDensityDpi();
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
