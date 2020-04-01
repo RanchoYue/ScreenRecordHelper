@@ -9,6 +9,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.PermissionUtils;
+
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
@@ -68,6 +71,17 @@ public class BroadcasterActivity extends Activity {
         mSSClient = ScreenSharingClient.getInstance();
         mSSClient.setListener(mListener);
         initAgoraEngineAndJoinChannel();
+        PermissionUtils.permission(PermissionConstants.STORAGE, PermissionConstants.MICROPHONE)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                    }
+
+                    @Override
+                    public void onDenied() {
+
+                    }
+                }).request();
     }
 
     private void initAgoraEngineAndJoinChannel() {
