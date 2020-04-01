@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
@@ -18,13 +16,15 @@ import io.agora.rtc.ss.ScreenSharingClient;
 import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
+/**
+ * @Describe:
+ * @Author: Created by yue on 2020/4/1.
+ */
 public class BroadcasterActivity extends Activity {
 
     private static final String LOG_TAG = BroadcasterActivity.class.getSimpleName();
 
     private RtcEngine mRtcEngine;
-    private FrameLayout mFlCam;
-    private FrameLayout mFlSS;
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
 
         @Override
@@ -37,19 +37,9 @@ public class BroadcasterActivity extends Activity {
             Log.d(LOG_TAG, "onJoinChannelSuccess: " + channel + " " + elapsed);
         }
 
-        @Override
-        public void onUserJoined(final int uid, int elapsed) {
-            Log.d(LOG_TAG, "onUserJoined: " + (uid & 0xFFFFFFL));
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (uid == Constant.SCREEN_SHARE_UID) {
-                        setupRemoteView(uid);
-                    }
-                }
-            });
-        }
     };
+
+
     private boolean mSS = false;
     private VideoEncoderConfiguration mVEC;
     private ScreenSharingClient mSSClient;
@@ -75,8 +65,6 @@ public class BroadcasterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_broadcaster);
-        mFlCam = findViewById(R.id.camera_preview);
-        mFlSS = findViewById(R.id.screen_share_preview);
         mSSClient = ScreenSharingClient.getInstance();
         mSSClient.setListener(mListener);
         initAgoraEngineAndJoinChannel();
@@ -98,18 +86,6 @@ public class BroadcasterActivity extends Activity {
         if (mSS) {
             mSSClient.stop(getApplicationContext());
         }
-    }
-
-    public void onCameraSharingClicked(View view) {
-        Button button = (Button) view;
-        if (button.isSelected()) {
-            button.setSelected(false);
-            button.setText(getResources().getString(R.string.label_start_camera));
-        } else {
-            button.setSelected(true);
-            button.setText(getResources().getString(R.string.label_stop_camera));
-        }
-        mRtcEngine.enableLocalVideo(button.isSelected());
     }
 
     public void onScreenSharingClicked(View view) {
@@ -154,18 +130,8 @@ public class BroadcasterActivity extends Activity {
         SurfaceView camV = RtcEngine.CreateRendererView(getApplicationContext());
         camV.setZOrderOnTop(true);
         camV.setZOrderMediaOverlay(true);
-        mFlCam.addView(camV, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
         mRtcEngine.setupLocalVideo(new VideoCanvas(camV, VideoCanvas.RENDER_MODE_FIT, Constant.CAMERA_UID));
         mRtcEngine.enableLocalVideo(false);
-    }
-
-    private void setupRemoteView(int uid) {
-        SurfaceView ssV = RtcEngine.CreateRendererView(getApplicationContext());
-        ssV.setZOrderOnTop(true);
-        ssV.setZOrderMediaOverlay(true);
-        mFlSS.addView(ssV, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        mRtcEngine.setupRemoteVideo(new VideoCanvas(ssV, VideoCanvas.RENDER_MODE_FIT, uid));
     }
 
     private void joinChannel() {

@@ -3,12 +3,9 @@
     <string name="start_record">开始录屏</string>
     <string name="stop_record">停止录屏</string>
 
-
     <string name="agora_app_id">fb43768edfea481a892073976b8a6e08</string>
 
     <string name="label_channel_name">ss_test</string>
-    <string name="label_start_camera">Start sharing your camera</string>
-    <string name="label_stop_camera">Stop sharing your camera</string>
     <string name="label_start_sharing_your_screen">Start Sharing your screen</string>
     <string name="label_stop_sharing_your_screen">Stop Sharing your screen</string>
 
