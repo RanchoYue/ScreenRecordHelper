@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_broadcaster).setOnClickListener(v ->
+                BroadcasterActivity.start(this));
+
     }
 
 

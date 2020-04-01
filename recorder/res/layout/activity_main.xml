@@ -16,4 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/stop_record" />
+
+    <Button
+        android:id="@+id/btn_broadcaster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="agora" />
 </LinearLayout>

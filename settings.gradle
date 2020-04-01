@@ -1,1 +1,1 @@
-include ':recorder'
+include ':recorder', ':screensharing'
