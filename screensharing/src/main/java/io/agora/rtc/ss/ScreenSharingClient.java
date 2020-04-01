@@ -27,17 +27,20 @@ public class ScreenSharingClient {
          * NOT be running in our main thread like most other things -- so,
          * if to update the UI, we need to use a Handler to hop over there.
          */
+        @Override
         public void onError(int error) {
             Log.e(TAG, "screen sharing service error happened: " + error);
             mStateListener.onError(error);
         }
 
+        @Override
         public void onTokenWillExpire() {
             Log.d(TAG, "access token for screen sharing service will expire soon");
             mStateListener.onTokenWillExpire();
         }
     };
     private ServiceConnection mScreenShareConn = new ServiceConnection() {
+        @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             mScreenShareSvc = IScreenSharing.Stub.asInterface(service);
 
@@ -51,6 +54,7 @@ public class ScreenSharingClient {
 
         }
 
+        @Override
         public void onServiceDisconnected(ComponentName className) {
             mScreenShareSvc = null;
         }

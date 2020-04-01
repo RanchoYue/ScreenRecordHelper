@@ -38,22 +38,31 @@ public class ScreenSharingService extends Service {
             = new RemoteCallbackList<INotification>();
 
     private final IScreenSharing.Stub mBinder = new IScreenSharing.Stub() {
+        @Override
         public void registerCallback(INotification cb) {
-            if (cb != null) mCallbacks.register(cb);
+            if (cb != null) {
+                mCallbacks.register(cb);
+            }
         }
 
+        @Override
         public void unregisterCallback(INotification cb) {
-            if (cb != null) mCallbacks.unregister(cb);
+            if (cb != null) {
+                mCallbacks.unregister(cb);
+            }
         }
 
+        @Override
         public void startShare() {
             startCapture();
         }
 
+        @Override
         public void stopShare() {
             stopCapture();
         }
 
+        @Override
         public void renewToken(String token) {
             refreshToken(token);
         }
@@ -241,7 +250,7 @@ public class ScreenSharingService extends Service {
                 @Override
                 public void onConnectionStateChanged(int state, int reason) {
                     switch (state) {
-                        case Constants.CONNECTION_STATE_FAILED :
+                        case Constants.CONNECTION_STATE_FAILED:
                             final int N = mCallbacks.beginBroadcast();
                             for (int i = 0; i < N; i++) {
                                 try {
@@ -253,7 +262,7 @@ public class ScreenSharingService extends Service {
                             }
                             mCallbacks.finishBroadcast();
                             break;
-                        default :
+                        default:
                             break;
                     }
                 }
@@ -292,37 +301,37 @@ public class ScreenSharingService extends Service {
         VideoEncoderConfiguration.ORIENTATION_MODE om;
 
         switch (frameRate) {
-            case 1 :
+            case 1:
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_1;
                 break;
-            case 7 :
+            case 7:
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_7;
                 break;
-            case 10 :
+            case 10:
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_10;
                 break;
-            case 15 :
+            case 15:
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15;
                 break;
-            case 24 :
+            case 24:
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24;
                 break;
-            case 30 :
+            case 30:
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_30;
                 break;
-            default :
+            default:
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15;
                 break;
         }
 
         switch (orientationMode) {
-            case 1 :
+            case 1:
                 om = VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_LANDSCAPE;
                 break;
-            case 2 :
+            case 2:
                 om = VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT;
                 break;
-            default :
+            default:
                 om = VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
                 break;
         }
